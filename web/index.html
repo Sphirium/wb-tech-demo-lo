@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>WB Order Viewer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 0;
+            color: #444;
+            font-size: 28px;
+        }
+        input {
+            width: 100%;
+            padding: 14px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+        #error {
+            color: #e74c3c;
+            margin: 15px 0;
+            font-weight: bold;
+            min-height: 20px;
+        }
+        #result {
+            margin-top: 20px;
+            text-align: left;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            display: none;
+            overflow: auto;
+            max-height: 500px;
+        }
+        #result pre {
+            margin: 0;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📦 WB Order Viewer</h1>
+        <p>Введите order_uid, чтобы получить данные заказа</p>
+        <input type="text" id="orderId" placeholder="Например: 80b8632f-0f29-4d5b-8c77-bc203fa8d35f" />
+        <button onclick="getOrder()">Получить заказ</button>
+        <div id="error"></div>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        function getOrder() {
+            const orderId = document.getElementById("orderId").value.trim();
+            const errorDiv = document.getElementById("error");
+            const resultDiv = document.getElementById("result");
+
+            if (!orderId) {
+                showError("Введите order_uid");
+                return;
+            }
+
+            // Сброс
+            errorDiv.textContent = "";
+            resultDiv.style.display = "none";
+
+            // Показываем, что загружаем
+            resultDiv.innerHTML = "<pre>Загрузка...</pre>";
+            resultDiv.style.display = "block";
+
+            fetch(`/order/${encodeURIComponent(orderId)}`)
+                .then(response => {
+                    if (!response.ok) {
+                        if (response.status === 404) {
+                            showError("❌ Заказ с таким order_uid не найден");
+                        } else {
+                            showError(`Ошибка: ${response.status} ${response.statusText}`);
+                        }
+                        resultDiv.style.display = "none";
+                    } else {
+                        return response.json();
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                        resultDiv.style.display = "block";
+                    }
+                })
+                .catch(err => {
+                    showError("Ошибка сети или сервера");
+                    resultDiv.style.display = "none";
+                    console.error("Fetch error:", err);
+                });
+        }
+
+        function showError(message) {
+            document.getElementById("error").textContent = message;
+            document.getElementById("result").style.display = "none";
+        }
+
+        // Поддержка Enter
+        document.getElementById("orderId").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                getOrder();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: wb-postgres
+    environment:
+      POSTGRES_DB: wb_orders
+      POSTGRES_USER: wbuser
+      POSTGRES_PASSWORD: wbpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  zookeeper:
+    image: bitnami/zookeeper:3.8
+    container_name: zookeeper
+    environment:
+      ALLOW_ANONYMOUS_LOGIN: "yes"
+    ports:
+      - "2181:2181"
+    restart: unless-stopped
+
+  kafka:
+    image: bitnami/kafka:3.6
+    container_name: kafka
+    environment:
+      # 🔥 Ключевое: отключаем KRaft
+      KAFKA_ENABLE_KRAFT: "false"
+
+      # Настройки подключения к Zookeeper
+      KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
+
+      # Слушаем внешний интерфейс
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+
+      # Разрешаем plaintext (только для dev!)
+      ALLOW_PLAINTEXT_LISTENER: "yes"
+
+      # ❌ Убираем ВСЁ, что связано с KRaft — даже если пустое
+      # Bitnami падает, если эти переменные объявлены
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: wb-redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
