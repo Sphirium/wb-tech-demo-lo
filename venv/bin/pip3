@@ -1,4 +1,4 @@
-#!/home/diman/go/src/github.com/Sphirium/learning-projects/wb-tech-demo-lo/venv/bin/python3
+#!/home/diman/go/src/github.com/Sphirium/wb-tech-demo-lo/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/service"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/service"
 	"github.com/segmentio/kafka-go"
 )
 

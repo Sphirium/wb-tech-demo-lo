@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/service"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/service"
 	"github.com/go-chi/chi/v5"
 )
 

@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/models"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/models"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
 )

@@ -1,4 +1,4 @@
-module github.com/Sphirium/learning-projects/wb-tech-demo-lo
+module github.com/Sphirium/wb-tech-demo-lo
 
 go 1.24.6
 

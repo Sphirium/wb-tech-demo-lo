@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/models"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/models"
 	"github.com/go-redis/redis/v8"
 )
 

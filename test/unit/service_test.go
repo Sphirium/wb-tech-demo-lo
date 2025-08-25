@@ -3,10 +3,10 @@ package unit
 import (
 	"testing"
 
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/cache"
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/models"
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/repository"
-	"github.com/Sphirium/learning-projects/wb-tech-demo-lo/internal/service"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/cache"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/models"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/repository"
+	"github.com/Sphirium/wb-tech-demo-lo/internal/service"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 )

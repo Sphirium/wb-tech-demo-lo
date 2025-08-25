@@ -33,7 +33,7 @@ end
 # Unset irrelevant variables.
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV /home/diman/go/src/github.com/Sphirium/learning-projects/wb-tech-demo-lo/venv
+set -gx VIRTUAL_ENV /home/diman/go/src/github.com/Sphirium/wb-tech-demo-lo/venv
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/"bin $PATH
