@@ -48,15 +48,6 @@ http://localhost:8081
 
 * `go test -v ./test/integration/`
 
-## Структура проекта:
-# .
-# ├── cmd/server/main.go       `Точка входа`
-# ├── internal/                `Логика: models, service, repository`
-# ├── web/index.html           `Веб-интерфейс`
-# ├── scripts/                 `Скрипты (send_test_message.py)`
-# ├── docker-compose.yml       `Инфраструктура`
-# ├── Makefile                 `Упрощённый запуск`
-# └── migrations/              `SQL-миграции`
 
 ## Требования:
 
